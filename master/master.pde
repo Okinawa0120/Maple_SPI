@@ -5,8 +5,7 @@ void setup(){
 }
 byte recvd;
 void loop(){
-  spi_init(SPI1);
-  //clearing SPI data register and control register
+  spi_init(SPI1);  //clearing SPI data register and control register
   spi.begin(SPI_1_125MHZ, MSBFIRST, 0);
   recvd=spi.transfer(2);
   SerialUSB.println(recvd);
