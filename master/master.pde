@@ -1,10 +1,13 @@
 HardwareSPI spi(1);
 void setup(){
-  spi.begin();
+  spi_init(SPI1);
+  spi.begin(SPI_1_125MHZ, MSBFIRST, 0);
 }
-byte i=0b11101110,n;
+byte recvd;
 void loop(){
-  n=spi.transfer(i);
-  SerialUSB.println(n);
-  delay(50);
+  spi_init(SPI1);
+  //clearing SPI data register and control register
+  spi.begin(SPI_1_125MHZ, MSBFIRST, 0);
+  recvd=spi.transfer(2);
+  SerialUSB.println(recvd);
 }

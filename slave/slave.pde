@@ -1,16 +1,16 @@
 HardwareSPI spi(1);
-uint8 recvd = 0xFF;
+volatile uint8 recvd = 1;
 
 void setup() {
-    spi.beginSlave();
-    SerialUSB.println("Starting up");
+  pinMode(7,INPUT_PULLUP);  //setting SS pin  
+  spi_init(SPI1);
+  spi.beginSlave(MSBFIRST, 0);
 }
 
 void loop() {
-    SerialUSB.print("Sending ");
-    SerialUSB.println(recvd, BIN);
-    recvd = spi.transfer(recvd);
-    SerialUSB.print("Got ");
-    SerialUSB.println(recvd);
-    delay(50);
+  spi_init(SPI1);  //clearing SPI data register and control register
+  spi.beginSlave(MSBFIRST, 0);
+  recvd = spi.transfer(3);
+  SerialUSB.println(recvd);
 }
+
